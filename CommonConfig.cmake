@@ -47,7 +47,10 @@ list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/local-exports)
 
 # Compiler flags
 # --------------
-add_definitions(-Wall -fvisibility=hidden)
+if (NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    # not using Visual Studio C++
+    add_definitions(-Wall -fvisibility=hidden)
+endif()
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
