@@ -84,6 +84,10 @@ enable_testing()
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 include(AddQtTest)
 
+# Code analysis with cppcheck
+# ---------------------------
+include(Cppcheck)
+
 # Code coverage with gcov
 # -----------------------
 include(CodeCoverage)
