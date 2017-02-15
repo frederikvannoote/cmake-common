@@ -29,5 +29,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(@TARGET_INCLUDE_INSTALL_DIRS@)
 
 if (@BUILD_SHARED_LIBS@)
-    add_definitions(-DBUILD_SHARED_LIBS)
+    add_definitions(-D@PROJECT_NAME@_BUILD_SHARED_LIBS)
 endif()
