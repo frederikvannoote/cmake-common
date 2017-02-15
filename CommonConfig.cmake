@@ -1,20 +1,5 @@
 cmake_minimum_required(VERSION 3.5.2 FATAL_ERROR)
 
-#######################
-# Prepare environment #
-#######################
-
-if (DEFINED ENV{CMAKE_MODULE_PATH})
-    set(_CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
-    set(CMAKE_MODULE_PATH $ENV{CMAKE_MODULE_PATH} CACHE PATH "Set module path to $ENV{CMAKE_MODULE_PATH}" FORCE)
-    list(APPEND CMAKE_MODULE_PATH ${_CMAKE_MODULE_PATH})
-endif (DEFINED ENV{CMAKE_MODULE_PATH})
-
-if (DEFINED ENV{CMAKE_INSTALL_PREFIX})
-    set(CMAKE_INSTALL_PREFIX $ENV{CMAKE_INSTALL_PREFIX} CACHE PATH "Set install prefix to $ENV{CMAKE_INSTALL_PREFIX}" FORCE)
-    list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_INSTALL_PREFIX})
-endif (DEFINED ENV{CMAKE_INSTALL_PREFIX})
-
 #################
 # Build options #
 #################
@@ -58,6 +43,21 @@ include(CMakePackageConfigHelpers)
 
 # Point cmake to the packages of libraries in this tree.
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/local-exports)
+
+
+# Prepare environment #
+# ---------------------
+
+if (DEFINED ENV{CMAKE_MODULE_PATH})
+    set(_CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
+    set(CMAKE_MODULE_PATH $ENV{CMAKE_MODULE_PATH} CACHE PATH "Set module path to $ENV{CMAKE_MODULE_PATH}" FORCE)
+    list(APPEND CMAKE_MODULE_PATH ${_CMAKE_MODULE_PATH})
+endif (DEFINED ENV{CMAKE_MODULE_PATH})
+
+if (DEFINED ENV{CMAKE_INSTALL_PREFIX})
+    set(CMAKE_INSTALL_PREFIX $ENV{CMAKE_INSTALL_PREFIX} CACHE PATH "Set install prefix to $ENV{CMAKE_INSTALL_PREFIX}" FORCE)
+    list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_INSTALL_PREFIX})
+endif (DEFINED ENV{CMAKE_INSTALL_PREFIX})
 
 
 # Compiler flags
