@@ -24,7 +24,7 @@ if (NOT DEFINED BUILD_SHARED_LIBS)
 endif()
 # When set to OFF, the library will be built as a static library
 if (${BUILD_SHARED_LIBS})
-    add_definitions(-DBUILD_SHARED_LIBS)
+    add_definitions(-D${PROJECT_NAME}_BUILD_SHARED_LIBS)
 endif()
 
 
