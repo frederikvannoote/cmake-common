@@ -1,10 +1,6 @@
-include(SetOutputDir)
-
 macro(add_qt_test TEST_NAME SRCS)
     find_package(Qt5Test REQUIRED)
 
-    set_global_output_dir(${CMAKE_BINARY_DIR}/tests)
-    
     add_executable(${TEST_NAME} ${SRCS})
 
     add_test(NAME ${TEST_NAME} COMMAND $<TARGET_FILE:${TEST_NAME}>)
