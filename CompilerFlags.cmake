@@ -132,7 +132,6 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
                         "-Woverflow"
                         "-Wshorten-64-to-32"
                         "-Wno-used-but-marked-unused"
-                        "-Weffc++"
                         "-Wreturn-type"
                         "-Wnull-character"
                         "-Wunused-variable"
