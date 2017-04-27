@@ -137,6 +137,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
                         "-Wunused-variable"
                         "-Wselector"
                         "-Wno-unknown-pragmas"              # suppress unknown pragma warnings
+                        "-Wno-gnu-zero-variadic-macro-arguments" # suppress need of at least one argument for '...' parameter of variadic macro
                         "-Wformat"
                         "-Wformat-nonliteral"
                         "-Wtautological-compare"
