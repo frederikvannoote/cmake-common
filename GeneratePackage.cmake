@@ -86,7 +86,8 @@ set(GLOBAL_HEADER_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 file(WRITE ${GLOBAL_HEADER_FILE} "//Includes all headers of ${PROJECT_NAME}\n\n")
 
 foreach(header ${${TARGET_NAME}_PUBLIC_HEADERS})
-  file(APPEND ${GLOBAL_HEADER_FILE} "#include \"${header}\"\n")
+  get_filename_component(header_filename ${header} NAME)
+  file(APPEND ${GLOBAL_HEADER_FILE} "#include \"${header_filename}\"\n")
 endforeach()
 
 install(FILES ${GLOBAL_HEADER_FILE} DESTINATION ${INCLUDE_INSTALL_DIR})
