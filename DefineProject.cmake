@@ -33,6 +33,3 @@ message(STATUS "Executables will be installed in: ${CMAKE_INSTALL_PREFIX}/${BIN_
 message(STATUS "CMake config-files will be written to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DIR}")
 message(STATUS "${PROJECT_NAME} import target: ${PROJECT_NAMESPACE}::${TARGET_NAME}")
 message(STATUS "Building ${PROJECT_NAME} ${FULL_VERSION} in ${CMAKE_BUILD_TYPE} mode")
-if (PRIVATE_TESTS_ENABLED)
-  message(STATUS "Private tests are enabled")
-endif()
