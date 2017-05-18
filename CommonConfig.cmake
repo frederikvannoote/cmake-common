@@ -83,6 +83,14 @@ endif (APPLE)
 enable_testing()
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 include(AddQtTest)
+if (PRIVATE_TESTS_ENABLED)
+  message(STATUS "Private tests are enabled")
+  add_definitions(-DPRIVATE_TESTS_ENABLED)
+endif()
+if (MANUAL_TESTS_ENABLED)
+  message(STATUS "Manual tests are enabled")
+  add_definitions(-DMANUAL_TESTS_ENABLED)
+endif()
 
 # Code analysis with cppcheck
 # ---------------------------
