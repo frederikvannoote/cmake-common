@@ -106,3 +106,7 @@ include(CompilerFlags)
 # Put all binaries in single directory (so libraries and executables work together in Windows)
 include(SetOutputDir)
 set_global_output_dir("${CMAKE_BINARY_DIR}/bin")
+
+# Version and build number as define
+add_definitions(-DVERSION="${FULL_VERSION}")
+add_definitions(-DBUILD_NUMBER=${BUILD_NUMBER})
