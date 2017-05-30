@@ -103,6 +103,9 @@ include(CodeCoverage)
 # Common compiler flags
 include(CompilerFlags)
 
+# Create package
+include(Package)
+
 # Put all binaries in single directory (so libraries and executables work together in Windows)
 include(SetOutputDir)
 set_global_output_dir("${CMAKE_BINARY_DIR}/bin")
