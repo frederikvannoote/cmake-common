@@ -13,6 +13,7 @@ set(INSTALL_DIRECTORY_NAME ${PROJECT_NAME}/${PROJECT_NAME_PREFIX}${SO_VERSION})
 set(CMAKE_DIRECTORY_NAME ${PROJECT_NAME_PREFIX}${SO_VERSION}${PROJECT_BASE_NAME})
 set(PACKAGE_NAME ${PROJECT_NAME_PREFIX}${SO_VERSION}${PROJECT_BASE_NAME})
 set(MODULE_NAME ${PROJECT_NAME})
+set(BUILD_NUMBER 0 CACHE STRING "Build number")
 #base name used for cmake config files:
 #<CMAKE_CONFIG_FILE_BASE_NAME>Config.cmake
 #<CMAKE_CONFIG_FILE_BASE_NAME>ConfigVersion.cmake
@@ -32,4 +33,4 @@ message(STATUS "Header files will be installed to: ${CMAKE_INSTALL_PREFIX}/${INC
 message(STATUS "Executables will be installed in: ${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR}")
 message(STATUS "CMake config-files will be written to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DIR}")
 message(STATUS "${PROJECT_NAME} import target: ${PROJECT_NAMESPACE}::${TARGET_NAME}")
-message(STATUS "Building ${PROJECT_NAME} ${FULL_VERSION} in ${CMAKE_BUILD_TYPE} mode")
+message(STATUS "Building ${PROJECT_NAME} ${FULL_VERSION}-b${BUILD_NUMBER} in ${CMAKE_BUILD_TYPE} mode")
