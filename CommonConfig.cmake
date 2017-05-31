@@ -108,5 +108,6 @@ include(SetOutputDir)
 set_global_output_dir("${CMAKE_BINARY_DIR}/bin")
 
 # Version and build number as define
+set(BUILD_NUMBER 0 CACHE STRING "Build number")
 add_definitions(-DVERSION="${FULL_VERSION}")
 add_definitions(-DBUILD_NUMBER=${BUILD_NUMBER})
