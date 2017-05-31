@@ -32,7 +32,7 @@ export(TARGETS ${TARGET_NAME}
 # Create, export and install config packages #
 ##############################################
 
-set(TARGET_INCLUDE_INSTALL_DIRS ${CMAKE_INSTALL_PREFIX}/${INCLUDE_INSTALL_DIR})
+set(TARGET_INCLUDE_INSTALL_DIRS \$\{CMAKE_CURRENT_LIST_DIR\}/../../../include/${PROJECT_NAME}/${PROJECT_NAMESPACE})
 
 # Create config file
 configure_package_config_file(
