@@ -18,9 +18,9 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 configure_package_config_file(
   ${CMAKE_CURRENT_LIST_DIR}/config.cmake.in
   ${CMAKE_BINARY_DIR}/local-exports/${CMAKE_CONFIG_FILE_BASE_NAME}Config.cmake
-  INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
-  PATH_VARS TARGET_INCLUDE_INSTALL_DIRS DEPENDENT_PACKAGES
+  INSTALL_DESTINATION ${CMAKE_SOURCE_DIR}
 )
+unset(TARGET_INCLUDE_INSTALL_DIRS)
 
 # This file is included in our template:
 export(TARGETS ${TARGET_NAME}
@@ -32,14 +32,12 @@ export(TARGETS ${TARGET_NAME}
 # Create, export and install config packages #
 ##############################################
 
-set(TARGET_INCLUDE_INSTALL_DIRS \$\{CMAKE_CURRENT_LIST_DIR\}/../../../include/${PROJECT_NAME}/${PROJECT_NAMESPACE})
-
 # Create config file
 configure_package_config_file(
   ${CMAKE_CURRENT_LIST_DIR}/config.cmake.in
   ${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_FILE_BASE_NAME}Config.cmake
-  INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
-  PATH_VARS TARGET_INCLUDE_INSTALL_DIRS
+  INSTALL_DESTINATION ${CMAKE_INSTALL_DIR}
+  PATH_VARS INCLUDE_INSTALL_DIR
 )
 
 # Create a config version file
