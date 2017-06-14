@@ -32,4 +32,4 @@ message(STATUS "Header files will be installed to: ${CMAKE_INSTALL_PREFIX}/${INC
 message(STATUS "Executables will be installed in: ${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR}")
 message(STATUS "CMake config-files will be written to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DIR}")
 message(STATUS "${PROJECT_NAME} import target: ${PROJECT_NAMESPACE}::${TARGET_NAME}")
-message(STATUS "Building ${PROJECT_NAME} ${FULL_VERSION}-b${BUILD_NUMBER} in ${CMAKE_BUILD_TYPE} mode")
+message(STATUS "Building ${PROJECT_NAME} ${FULL_VERSION} (${BUILD_HASH}) in ${CMAKE_BUILD_TYPE} mode")
