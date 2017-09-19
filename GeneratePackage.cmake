@@ -37,7 +37,7 @@ configure_package_config_file(
   ${CMAKE_CURRENT_LIST_DIR}/config.cmake.in
   ${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_FILE_BASE_NAME}Config.cmake
   INSTALL_DESTINATION ${CMAKE_INSTALL_DIR}
-  PATH_VARS INCLUDE_INSTALL_DIR
+  PATH_VARS INCLUDE_INSTALL_DIR GLOBAL_INCLUDE_INSTALL_DIR
 )
 
 # Create a config version file
@@ -80,15 +80,15 @@ install(EXPORT ${TARGET_NAME}Targets
 # Create and install a global module include file
 # This makes it possible to include all header files of the module by using
 # #include <${PROJECT_NAME}>
-set(GLOBAL_HEADER_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
+set(GLOBAL_HEADER_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME_PREFIX}${SO_VERSION}${PROJECT_BASE_NAME})
 file(WRITE ${GLOBAL_HEADER_FILE} "//Includes all headers of ${PROJECT_NAME}\n\n")
 
 foreach(header ${${TARGET_NAME}_PUBLIC_HEADERS})
   get_filename_component(header_filename ${header} NAME)
-  file(APPEND ${GLOBAL_HEADER_FILE} "#include \"${header_filename}\"\n")
+  file(APPEND ${GLOBAL_HEADER_FILE} "#include \"${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}/${header_filename}\"\n")
 endforeach()
 
-install(FILES ${GLOBAL_HEADER_FILE} DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES ${GLOBAL_HEADER_FILE} DESTINATION include/${PROJECT_NAME_PREFIX}${SO_VERSION})
 
 # Create and install a global module include file for internal use
 # This makes it possible to include all header files of the module by using
