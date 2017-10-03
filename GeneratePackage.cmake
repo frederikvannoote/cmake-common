@@ -88,7 +88,7 @@ foreach(header ${${TARGET_NAME}_PUBLIC_HEADERS})
   file(APPEND ${GLOBAL_HEADER_FILE} "#include \"${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}/${header_filename}\"\n")
 endforeach()
 
-install(FILES ${GLOBAL_HEADER_FILE} DESTINATION include/${PROJECT_NAME_PREFIX}${SO_VERSION})
+install(FILES ${GLOBAL_HEADER_FILE} DESTINATION ${GLOBAL_INCLUDE_INSTALL_DIR})
 
 # Create and install a global module include file for internal use
 # This makes it possible to include all header files of the module by using
