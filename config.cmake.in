@@ -9,9 +9,6 @@
 
 @PACKAGE_INIT@
 
-cmake_policy(SET CMP0024 OLD)
-include("${CMAKE_CURRENT_LIST_DIR}/@CMAKE_CONFIG_FILE_BASE_NAME@Targets.cmake")
-
 set(@PROJECT_NAME@_INSTALL_DIR @PACKAGE_INCLUDE_INSTALL_DIR@)
 set(@PROJECT_NAME@_GLOBAL_INSTALL_DIR @PACKAGE_GLOBAL_INCLUDE_INSTALL_DIR@)
 
@@ -24,6 +21,9 @@ endforeach()
 foreach(PACKAGE @DEPENDENT_PACKAGES@)
     check_required_components(${PACKAGE})
 endforeach()
+
+cmake_policy(SET CMP0024 OLD)
+include("${CMAKE_CURRENT_LIST_DIR}/@CMAKE_CONFIG_FILE_BASE_NAME@Targets.cmake")
 
 # @PROJECT_NAME@ requires C++11
 set(CMAKE_CXX_STANDARD 11)
