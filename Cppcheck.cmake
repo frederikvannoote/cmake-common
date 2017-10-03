@@ -11,5 +11,5 @@ if(CPPCHECK_FOUND)
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
         COMMENT "Running cppcheck..."
         VERBATIM)
-    add_dependencies(cppcheck-${PROJECT_BASE_NAME} cppcheck)
+    add_dependencies(cppcheck cppcheck-${PROJECT_BASE_NAME})
 endif()

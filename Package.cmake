@@ -8,4 +8,4 @@ add_custom_target(sdk-${PROJECT_BASE_NAME} ${CMAKE_COMMAND} --build ${CMAKE_BINA
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     COMMENT "Packaging artefacts into ${CMAKE_BINARY_DIR}/sdk.zip ..."
     VERBATIM)
-add_dependencies(sdk-${PROJECT_BASE_NAME} sdk)
+add_dependencies(sdk sdk-${PROJECT_BASE_NAME})
