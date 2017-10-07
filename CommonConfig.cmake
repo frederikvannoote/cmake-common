@@ -119,3 +119,5 @@ execute_process(COMMAND git rev-parse --short HEAD
     OUTPUT_STRIP_TRAILING_WHITESPACE
     )
 add_definitions(-DBUILD_HASH="${BUILD_HASH}")
+# Create documentation with doxygen
+include(Doxygen)
