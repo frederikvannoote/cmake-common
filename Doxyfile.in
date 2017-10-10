@@ -1,0 +1,69 @@
+# Doxygen configuration
+# http://www.stack.nl/~dimitri/doxygen/manual/config.html
+
+PROJECT_NAME = @PROJECT_NAME@
+
+INPUT = @CMAKE_SOURCE_DIR@
+RECURSIVE = YES
+OUTPUT_DIRECTORY = @CMAKE_BINARY_DIR@/doxygen
+
+GENERATE_HTML = YES
+HTML_EXTRA_STYLESHEET = @CMAKE_CURRENT_LIST_DIR@/doxygen_custom.css
+
+GENERATE_LATEX = NO
+
+GENERATE_QHP = YES
+QHP_NAMESPACE = @QHP_NAMESPACE@
+QHP_VIRTUAL_FOLDER = @QHP_VIRTUAL_FOLDER@
+QCH_FILE = ../@QCH_FILE@
+QHG_LOCATION = "@QCH_HELPGENERATOR@"
+
+# The following file types are scanned for documentation
+FILE_PATTERNS = *.cpp *.h *.qml *.js
+
+# Use doxyqml for generating Doxygen documentation from QML
+FILTER_PATTERNS = *.qml=@DOXYQML_PY@
+
+# Generate list of source files. Documented entities will be cross-referenced with these sources.
+# (default NO)
+SOURCE_BROWSER = YES
+
+# Include private members of a class documentation (default NO)
+# EXTRACT_PRIVATE = YES
+
+# Include static members in the documentation (default NO)
+EXTRACT_STATIC = YES
+
+# If the MACRO_EXPANSION tag is set to YES Doxygen will expand all macro
+# names in the source code. If set to NO (the default) only conditional
+# compilation will be performed. Macro expansion can be done in a controlled
+# way by setting EXPAND_ONLY_PREDEF to YES.
+MACRO_EXPANSION = YES
+
+# The PREDEFINED tag can be used to specify one or more macro names that
+# are defined before the preprocessor is started (similar to the -D option of
+# gcc). The argument of the tag is a list of macros of the form: name
+# or name=definition (no spaces). If the definition and the = are
+# omitted =1 is assumed. To prevent a macro definition from being
+# undefined via #undef or recursively expanded use the := operator
+# instead of the = operator.
+PREDEFINED = Q_DECL_FINAL:=
+
+# Generate warning messages to standard error (default YES)
+WARNINGS = YES
+WARN_FORMAT = "doxygen-warning" [$file]["line" $line":"$text]
+WARN_LOGFILE = @CMAKE_BINARY_DIR@/doxygen-warnings.txt
+
+# Sort the brief descriptions of file, namespace and class members alphabetically
+# by member name instead of in declaration order (default NO)
+SORT_BRIEF_DOCS = NO
+
+# Sort the (detailed) documentation of file and class members alphabetically
+# by member name instead of in declaration order (default = YES)
+SORT_MEMBER_DOCS = YES
+
+# Sort the (brief and detailed) documentation of class members so that constructors
+# and destructors are listed first (default NO)
+SORT_MEMBERS_CTORS_1ST = YES
+
+USE_MATHJAX = YES
