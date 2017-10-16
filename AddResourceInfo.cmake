@@ -18,8 +18,8 @@ set(THIS_FILE_DIR ${CMAKE_CURRENT_LIST_DIR})
 #RC_APPEND_LIST_NAME - The name of the list to append the RC file to
 macro(add_resource_info PROJECT ISLIBRARY FILEATTR_VER_MAJOR FILEATTR_VER_MINOR FILEATTR_VER_PATCH FILEATTR_DESC FILEATTR_NAME RC_APPEND_LIST_NAME)
 #If we are creating an RC file for a library, make sure it is a DLL and not a static one. If it's an application, no need to do this check.
-set(VALID_APPLICATION_LIBRARY (NOT ${ISLIBRARY} OR (${BUILD_SHARED_LIBS} AND ${ISLIBRARY})))
-if(WIN32 AND NOT UNIX AND ${VALID_APPLICATION_LIBRARY})
+set(IS_APPLICABLE_RESOURCE (NOT ${ISLIBRARY} OR (${BUILD_SHARED_LIBS} AND ${ISLIBRARY})))
+if(WIN32 AND NOT UNIX AND ${IS_APPLICABLE_RESOURCE})
     # Finish creating the relevant data for the RC file.
     get_git_head_revision(GIT_REFSPEC GIT_COMMIT_HASH)
     string(TIMESTAMP CURRENT_YEAR "%Y")

@@ -121,3 +121,7 @@ execute_process(COMMAND git rev-parse --short HEAD
 add_definitions(-DBUILD_HASH="${BUILD_HASH}")
 # Create documentation with doxygen
 include(Doxygen)
+
+# Generate information (name, description, version, etc.) for applications and libraries
+include(GetGitRevisionDescription)
+include(AddResourceInfo)
