@@ -12,11 +12,11 @@ set(THIS_FILE_DIR ${CMAKE_CURRENT_LIST_DIR})
 #Parameters:
 #PROJECT - The filename of the project (without extension)
 #ISLIBRARY - Boolean. If true, this target is a library. If false, it is an application.
-#FILEATTR_VER_MAJOR FILEATTR_VER_MINOR FILEATTR_VER_PATCH - Version
-#FILEATTR_DESC - Description of the application/library
-#FILEATTR_NAME - The full name of the application/library
+#FILE_VER_MAJOR FILE_VER_MINOR FILE_VER_PATCH - Version
+#FILE_DESC - Description of the application/library
+#FILE_NAME - The full name of the application/library
 #RC_APPEND_LIST_NAME - The name of the list to append the RC file to
-macro(add_resource_info PROJECT ISLIBRARY FILEATTR_VER_MAJOR FILEATTR_VER_MINOR FILEATTR_VER_PATCH FILEATTR_DESC FILEATTR_NAME RC_APPEND_LIST_NAME)
+macro(add_resource_info PROJECT ISLIBRARY FILE_VER_MAJOR FILE_VER_MINOR FILE_VER_PATCH FILE_DESC FILE_NAME RC_APPEND_LIST_NAME)
 #If we are creating an RC file for a library, make sure it is a DLL and not a static one. If it's an application, no need to do this check.
 set(IS_APPLICABLE_RESOURCE (NOT ${ISLIBRARY} OR (${BUILD_SHARED_LIBS} AND ${ISLIBRARY})))
 if(WIN32 AND NOT UNIX AND ${IS_APPLICABLE_RESOURCE})
@@ -29,12 +29,20 @@ if(WIN32 AND NOT UNIX AND ${IS_APPLICABLE_RESOURCE})
         set(ARCHITECTURE_DESC "64-bit")
     endif()
     set(FILEATTR_YEAR_RELEASE ${CURRENT_YEAR})
-    set(FILEATTR_DESC "${FILEATTR_DESC} (${ARCHITECTURE_DESC})")
+    set(FILE_DESC "${FILE_DESC} (${ARCHITECTURE_DESC})")
     if(ISLIBRARY)
         set(FILEATTR_ORIGINAL_NAME "${PROJECT}.dll ${GIT_COMMIT_HASH}")
     else()
         set(FILEATTR_ORIGINAL_NAME "${PROJECT}.exe ${GIT_COMMIT_HASH}")
     endif()
+    
+    # The RC file needs explicit variables (as defined in set() statements), so we can't reference the macro parameters. Set these as independent
+    # variables so that they can work in the RC file.
+    set(FILEATTR_VER_MAJOR ${FILE_VER_MAJOR})
+    set(FILEATTR_VER_MINOR ${FILE_VER_MINOR})
+    set(FILEATTR_VER_PATCH ${FILE_VER_PATCH})
+    set(FILEATTR_DESC ${FILE_DESC})
+    set(FILEATTR_NAME ${FILE_NAME})
     
     if(CMAKE_COMPILER_IS_MINGW)
         # First we will try to filter out the mingw bin directory using some list operations
