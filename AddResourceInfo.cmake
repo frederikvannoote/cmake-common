@@ -6,36 +6,34 @@
 #top level scope at include time.
 set(THIS_FILE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-#This macro "finishes" the file attributes that should've been already set by the CMakeLists.txt that calls
-#add_resource_info. It does this by appending the Git commit hash to the original name (so Windows knows when
-#a different version is present), creates the original name in the first place (which should always just be
-#the filename), sets the year release to the current year, and appends the architecture to the description.
-macro(set_common_attributes_windows PROJECT fileExtension)
-get_git_head_revision(GIT_REFSPEC GIT_COMMIT_HASH)
-string(TIMESTAMP CURRENT_YEAR "%Y")
-if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    set(ARCHITECTURE_DESCRIPTION "32-bit")
-else()
-    set(ARCHITECTURE_DESCRIPTION "64-bit")
-endif()
-set( FILE_YEAR_RELEASE ${CURRENT_YEAR})
-set( FILE_DESCRIPTION "${FILE_DESCRIPTION} (${ARCHITECTURE_DESCRIPTION})")
-set( FILE_ORIGINAL_NAME "${PROJECT}.${fileExtension} ${GIT_COMMIT_HASH}" )
-endmacro()
-
 #This macro (currently Windows-only) creates a .RC file that holds all of the application/library's file details. This RC
 #file is then appended to the source list for the target.
 #
-#Here are the following variables the macro expects are properly set before executing:
-#FILE_VERSION_MAJOR        - The major version of the file
-#FILE_VERSION_MINOR        - The minor version of the file
-#FILE_VERSION_PATCH        - The patch version of the file
-#FILE_DESCRIPTION          - A description of the file
-#FILE_PRODUCT_NAME         - A name of the product. Usually just the fully-expanded name for the application/library.
-#(parameter) fileExtension - EXE or DLL?
-macro(add_resource_info PROJECT fileExtension)
+#Parameters:
+#PROJECT - The filename of the project (without extension)
+#ISLIBRARY - Boolean. If true, this target is a library. If false, it is an application.
+#FILEATTR_VER_MAJOR FILEATTR_VER_MINOR FILEATTR_VER_PATCH - Version
+#FILEATTR_DESC - Description of the application/library
+#FILEATTR_NAME - The full name of the application/library
+#RC_APPEND_LIST_NAME - The name of the list to append the RC file to
+macro(add_resource_info PROJECT ISLIBRARY FILEATTR_VER_MAJOR FILEATTR_VER_MINOR FILEATTR_VER_PATCH FILEATTR_DESC FILEATTR_NAME RC_APPEND_LIST_NAME)
 if(WIN32 AND NOT UNIX)
-    set_common_attributes_windows(PROJECT ${fileExtension})
+    # Finish creating the relevant data for the RC file.
+    get_git_head_revision(GIT_REFSPEC GIT_COMMIT_HASH)
+    string(TIMESTAMP CURRENT_YEAR "%Y")
+    if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+        set(ARCHITECTURE_DESC "32-bit")
+    else()
+        set(ARCHITECTURE_DESC "64-bit")
+    endif()
+    set(FILEATTR_YEAR_RELEASE ${CURRENT_YEAR})
+    set(FILEATTR_DESC "${FILEATTR_DESC} (${ARCHITECTURE_DESC})")
+    if(ISLIBRARY)
+        set(FILEATTR_ORIGINAL_NAME "${PROJECT}.dll ${GIT_COMMIT_HASH}")
+    else()
+        set(FILEATTR_ORIGINAL_NAME "${PROJECT}.exe ${GIT_COMMIT_HASH}")
+    endif()
+    
     if(CMAKE_COMPILER_IS_MINGW)
         # First we will try to filter out the mingw bin directory using some list operations
         # Make a list
@@ -49,7 +47,7 @@ if(WIN32 AND NOT UNIX)
         LIST(GET QT_LIB_DIR_LIST ${previous} MINGW)
 
         # add resource.o to the source list of the dll or exe
-        list(APPEND ${PROJECT}_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resource.o)
+        list(APPEND ${RC_APPEND_LIST_NAME} ${CMAKE_CURRENT_BINARY_DIR}/resource.o)
 
         # fill in the appropriate information into resource.rc
         configure_file(${THIS_FILE_DIR}/resource.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resource.rc)
@@ -68,7 +66,7 @@ if(WIN32 AND NOT UNIX)
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 
         # add resource.rc to the source list of the dll or exe
-        list(APPEND ${PROJECT}_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resource.rc)
+        list(APPEND ${RC_APPEND_LIST_NAME} ${CMAKE_CURRENT_BINARY_DIR}/resource.rc)
 
         # fill in the appropriate information into resource.rc
         configure_file(${THIS_FILE_DIR}/resource.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resource.rc)
