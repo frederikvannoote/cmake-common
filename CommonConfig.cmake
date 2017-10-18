@@ -77,7 +77,11 @@ endif (APPLE)
 # Switch testing on
 # -----------------
 enable_testing()
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
+if (NOT TARGET check)
+    add_custom_target(check)
+endif()
+add_custom_target(check-${PROJECT_BASE_NAME} COMMAND ${CMAKE_CTEST_COMMAND})
+add_dependencies(check check-${PROJECT_BASE_NAME})
 if (DEFINED QTDIR)
     include(AddQtTest)
 endif (DEFINED QTDIR)
@@ -115,3 +119,9 @@ execute_process(COMMAND git rev-parse --short HEAD
     OUTPUT_STRIP_TRAILING_WHITESPACE
     )
 add_definitions(-DBUILD_HASH="${BUILD_HASH}")
+# Create documentation with doxygen
+include(Doxygen)
+
+# Generate information (name, description, version, etc.) for applications and libraries
+include(GetGitRevisionDescription)
+include(AddResourceInfo)

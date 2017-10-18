@@ -1,15 +1,22 @@
 # Enable Code Coverage
 #
 # USAGE:
-# 1. Add the following line to your CMakeLists.txt:
+# 1. If there are any special files you want to exclude from
+#    code coverage, set CODE_COVERAGE_EXCLUDES accordingly:
+#      list(APPEND "*/FileToExclude.cpp" "*/FolderToExclude/*")
+#
+# 2. If you don't want the standard excluded files:
+#      set(CODE_COVERAGE_NO_DEFAULT_EXCLUDES 1)
+#
+# 3. Add the following line to your CMakeLists.txt:
 #      INCLUDE(CodeCoverage)
 #
-# 2. Build a Debug build:
-#	 Add the following option: -DCODE_COVERAGE=True
+# 4. Build a Debug build:
+#    Add the following option: -DCODE_COVERAGE=True
 #
-# 3. Run the application(s) where you want to analyse the coverage
+# 5. Run the application(s) where you want to analyse the coverage
 #
-# 4. Generate the report by calling one of these targets:
+# 6. Generate the report by calling one of these targets:
 #    - coverage-html (HTML format)
 #    - coverage-xml (cobertura XML format)
 #
@@ -35,6 +42,19 @@ function(ENABLE_CODE_COVERAGE)
     endif()
 endfunction()
 
+if(NOT CODE_COVERAGE_NO_DEFAULT_EXCLUDES)
+    list(APPEND CODE_COVERAGE_EXCLUDES
+        "*moc_*"
+        "*.moc"
+        "*tst_*"
+        "*test_*"
+        "*tests*"
+        "*qrc_*"
+        "ui_*.h"
+        "catch.hpp"
+    )
+endif()
+
 option(CODE_COVERAGE "Code coverage" OFF)
 if(CODE_COVERAGE)
     find_package(Gcov REQUIRED)
@@ -47,12 +67,9 @@ if(CODE_COVERAGE)
     add_custom_target("coverage-report")
     add_custom_command(TARGET "coverage-report"
         COMMAND ${LCOV_EXECUTABLE} --quiet --capture --directory . --base-directory ${CMAKE_SOURCE_DIR} --no-external -o coverage.info
-        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*moc_\* -o coverage.info
-        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*.moc -o coverage.info
-        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*tst_\* -o coverage.info
-        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*tests\* -o coverage.info
-        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*qrc_\* -o coverage.info
-        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info ui_\*.h -o coverage.info
+        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info ${CODE_COVERAGE_EXCLUDES} -o coverage.info
+        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*test_\* -o coverage.info
+        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info catch.hpp -o coverage.info
         COMMAND ${LCOV_EXECUTABLE} --list coverage.info
         COMMAND ${LCOV_EXECUTABLE} --summary coverage.info
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
