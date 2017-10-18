@@ -81,6 +81,6 @@ if(WIN32 AND NOT UNIX AND ${IS_APPLICABLE_RESOURCE})
         # fill in the appropriate information into resource.rc
         configure_file(${THIS_FILE_DIR}/resource.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resource.rc)
     endif()
-endif(WIN32 AND NOT UNIX)
+endif(WIN32 AND NOT UNIX AND ${IS_APPLICABLE_RESOURCE})
 endmacro()
 
