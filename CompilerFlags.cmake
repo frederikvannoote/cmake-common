@@ -192,6 +192,9 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 #                        "/wd4512"   # suppress warning: assignment operator could not be generated
                                     # A fix is planned in Qt 5.4.2 (https://bugreports.qt.io/browse/QTBUG-7233)
                                     # Check later with Qt >= 5.4.2 if warning suppression can be removed
+                        "/wd4714"   # suppress warning: marked __forceinline but are not inlined
+                                    # Fixed in Qt 5.10.0 (https://bugreports.qt.io/browse/QTBUG-55042)
+                                    # Check later with Qt >= 5.10.0 if warning suppression can be removed
                         "/nologo"
                         "/EHsc-"    # disable exceptions
                         "/GR-"      # disable RTTI
