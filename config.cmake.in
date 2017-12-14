@@ -22,7 +22,6 @@ foreach(PACKAGE @DEPENDENT_PACKAGES@)
     check_required_components(${PACKAGE})
 endforeach()
 
-cmake_policy(SET CMP0024 OLD)
 include("${CMAKE_CURRENT_LIST_DIR}/@CMAKE_CONFIG_FILE_BASE_NAME@Targets.cmake")
 
 # @PROJECT_NAME@ requires C++11

@@ -10,9 +10,9 @@ set_target_properties(${TARGET_NAME} PROPERTIES
   PRIVATE_HEADER "${${TARGET_NAME}_PRIVATE_HEADERS}"
 )
 
-################################################################
-# Create and export config packages for usage within this tree #
-################################################################
+#####################################################
+# Create config packages for usage within this tree #
+#####################################################
 
 # We configure our template. The template is described later.
 configure_package_config_file(
@@ -21,12 +21,6 @@ configure_package_config_file(
   INSTALL_DESTINATION ${CMAKE_SOURCE_DIR}
 )
 unset(TARGET_INCLUDE_INSTALL_DIRS)
-
-# This file is included in our template:
-export(TARGETS ${TARGET_NAME}
-  FILE "${CMAKE_BINARY_DIR}/local-exports/${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake"
-  NAMESPACE ${PROJECT_NAMESPACE}::
-)
 
 ##############################################
 # Create, export and install config packages #
