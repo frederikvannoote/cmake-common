@@ -26,8 +26,6 @@ set(GLOBAL_INCLUDE_INSTALL_DIR include/${INSTALL_DIRECTORY_NAME})
 set(BIN_INSTALL_DIR bin)
 set(CMAKE_INSTALL_DIR lib/cmake/${CMAKE_DIRECTORY_NAME})
 
-project(${PROJECT_NAME})
-
 message(STATUS "Libraries will be installed to: ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
 message(STATUS "Header files will be installed to: ${CMAKE_INSTALL_PREFIX}/${INCLUDE_INSTALL_DIR}")
 message(STATUS "Executables will be installed in: ${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR}")
