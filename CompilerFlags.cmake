@@ -195,6 +195,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                         "/wd4714"   # suppress warning: marked __forceinline but are not inlined
                                     # Fixed in Qt 5.10.0 (https://bugreports.qt.io/browse/QTBUG-55042)
                                     # Check later with Qt >= 5.10.0 if warning suppression can be removed
+                        "/wd4718"   # Workaround for https://bugreports.qt.io/browse/QTBUG-54089
                         "/nologo"
                         "/EHsc-"    # disable exceptions
                         "/GR-"      # disable RTTI
