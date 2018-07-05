@@ -57,24 +57,16 @@ install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_NAME}Targets
 )
 
 # Export the import targets
-export(EXPORT ${TARGET_NAME}Targets
-  FILE "${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake"
+install(EXPORT ${TARGET_NAME}Targets
+  FILE "${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake"
   NAMESPACE ${PROJECT_NAMESPACE}::
+  DESTINATION ${CMAKE_INSTALL_DIR}
 )
 
 # Now install the 3 config files
 install(FILES ${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_FILE_BASE_NAME}Config.cmake
               ${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_FILE_BASE_NAME}ConfigVersion.cmake
         DESTINATION ${CMAKE_INSTALL_DIR}
-)
-
-install(EXPORT ${TARGET_NAME}Targets
-  FILE
-    ${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake
-  NAMESPACE
-    ${PROJECT_NAMESPACE}::
-  DESTINATION
-    ${CMAKE_INSTALL_DIR}
 )
 
 # Create and install a global module include file
