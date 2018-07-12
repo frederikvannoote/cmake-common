@@ -20,8 +20,12 @@ macro(add_resource_info PROJECT ISLIBRARY FILE_VER_MAJOR FILE_VER_MINOR FILE_VER
 #If we are creating an RC file for a library, make sure it is a DLL and not a static one. If it's an application, no need to do this check.
 set(IS_APPLICABLE_RESOURCE (NOT ${ISLIBRARY} OR (${BUILD_SHARED_LIBS} AND ${ISLIBRARY})))
 if(WIN32 AND NOT UNIX AND ${IS_APPLICABLE_RESOURCE})
-    # Finish creating the relevant data for the RC file.
-    get_git_head_revision(GIT_REFSPEC GIT_COMMIT_HASH)
+
+    if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+        # Finish creating the relevant data for the RC file.
+        get_git_head_revision(GIT_REFSPEC GIT_COMMIT_HASH)
+    endif()
+
     string(TIMESTAMP CURRENT_YEAR "%Y")
     if(CMAKE_SIZEOF_VOID_P EQUAL 4)
         set(ARCHITECTURE_DESC "32-bit")

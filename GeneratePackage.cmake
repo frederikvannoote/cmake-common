@@ -40,9 +40,10 @@ install(TARGETS ${TARGET_NAME}
 )
 
 # Export the import targets
-export(EXPORT ${TARGET_NAME}Targets
-  FILE "${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake"
+install(EXPORT ${TARGET_NAME}Targets
+  FILE "${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake"
   NAMESPACE ${PROJECT_NAMESPACE}::
+  DESTINATION ${CMAKE_INSTALL_DIR}
 )
 
 # Now install the 3 config files
