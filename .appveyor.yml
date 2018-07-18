@@ -34,7 +34,7 @@ install:
 
 build_script:
 # Clone examples: they are the code to test against.
-  - git clone https://github.com/frederikvannoote/cmake-common-examples.git %HOME%/examples
+  - git clone https://github.com/frederikvannoote/cmake-common-examples.git %HOMEPATH%/examples
   - set CMAKE_COMMON=%APPVEYOR_BUILD_FOLDER%
   - mkdir %TEMP%/installed
 
@@ -42,7 +42,7 @@ test_script:
   # Build and install simplelib
   - mkdir %TEMP%/simplelib-build
   - cd %TEMP%/simplelib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -G Ninja %HOME%/examples/simplelib
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -G Ninja %HOMEPATH%/examples/simplelib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
@@ -53,21 +53,21 @@ test_script:
   # Build and install Simpleapp
   - mkdir %TEMP%/simpleapp-build
   - cd %TEMP%/simpleapp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=%TEMP%/relocated/lib/cmake/CC1simplelib -G Ninja %HOME%/examples/simpleapp
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=%TEMP%/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/simpleapp
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
 
   # Build and install QSimpleApp
   - mkdir %TEMP%/QSimpleApp-build
   - cd %TEMP%/QSimpleApp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=%TEMP%/relocated/lib/cmake/CC1simplelib -G Ninja %HOME%/examples/QSimpleApp/
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=%TEMP%/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/QSimpleApp/
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
 
   # Build and install complex lib
   - mkdir %TEMP%/complexlib-build
   - cd %TEMP%/complexlib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -G Ninja %HOME%/examples/complexlib
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -G Ninja %HOMEPATH%/examples/complexlib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
