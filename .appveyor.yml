@@ -74,6 +74,6 @@ test_script:
 
 # uncomment following lines to be able to debug the appveyor image through RDP protocol when build finished
 # https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
-# on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
