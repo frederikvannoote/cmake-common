@@ -32,18 +32,6 @@ install:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
   - set PATH=%PATH%;%QTDIR%/bin
 
-before_build:
-  - cd /D %APPVEYOR_BUILD_FOLDER%
-  - mkdir build
-  - cd build
-  - cmake -G "CodeBlocks - Ninja" -DCMAKE_BUILD_TYPE=%configuration% -DPRIVATE_TESTS_ENABLED=ON -DBUILD_SHARED_LIBS=%SHARED% ..
-  
-build_script:
-  - cmake --build . --target all --config %configuration%
-
-test_script:
-  - cmake --build . --target test --config %configuration%
-
 build_script:
 # Clone examples: they are the code to test against.
   - git clone https://github.com/frederikvannoote/cmake-common-examples.git %HOME%/examples
