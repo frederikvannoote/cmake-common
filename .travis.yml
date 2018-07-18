@@ -63,32 +63,41 @@ install:
   - export CMAKE_COMMON=${TRAVIS_BUILD_DIR}
   - mkdir /tmp/installed
 
-script:  
-  - mkdir /tmp/simplelib-build
-  - cd /tmp/simplelib-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${HOME}/examples/simplelib
-  - cmake --build . --target all
-  - cmake --build . --target install
-  - cmake --build . --target sdk
-# Relocate library
-  - cp -r /tmp/installed /tmp/relocated
+script:
+  - |
+    # Build and install simplelib
+    mkdir /tmp/simplelib-build
+    cd /tmp/simplelib-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${HOME}/examples/simplelib
+    cmake --build . --target all
+    cmake --build . --target install
+    cmake --build . --target sdk
+  - |
+    # Relocate library
+    cp -r /tmp/installed /tmp/relocated
  
-  - mkdir /tmp/simpleapp-build
-  - cd /tmp/simpleapp-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/relocated/lib/cmake/CC1simplelib -G Ninja ${HOME}/examples/simpleapp
-  - cmake --build . --target all
-  - cmake --build . --target install
+  - |
+    # Build and install Simpleapp
+    mkdir /tmp/simpleapp-build
+    cd /tmp/simpleapp-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/relocated/lib/cmake/CC1simplelib -G Ninja ${HOME}/examples/simpleapp
+    cmake --build . --target all
+    cmake --build . --target install
 
-  - mkdir /tmp/QSimpleApp-build
-  - cd /tmp/QSimpleApp-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/relocated/lib/cmake/CC1simplelib -G Ninja ${HOME}/examples/QSimpleApp/
-  - cmake --build . --target all
-  - cmake --build . --target install
+  - |
+    # Build and install QSimpleApp
+    mkdir /tmp/QSimpleApp-build
+    cd /tmp/QSimpleApp-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/relocated/lib/cmake/CC1simplelib -G Ninja ${HOME}/examples/QSimpleApp/
+    cmake --build . --target all
+    cmake --build . --target install
 
-  - mkdir /tmp/complexlib-build
-  - cd /tmp/complexlib-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${HOME}/examples/complexlib
-  - cmake --build . --target all
-  - cmake --build . --target install
-  - cmake --build . --target sdk
+  - |
+    # Build and install complex lib
+    mkdir /tmp/complexlib-build
+    cd /tmp/complexlib-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${HOME}/examples/complexlib
+    cmake --build . --target all
+    cmake --build . --target install
+    cmake --build . --target sdk
 
