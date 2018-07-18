@@ -40,9 +40,10 @@ install(TARGETS ${TARGET_NAME}
 )
 
 # Export the import targets
-export(EXPORT ${TARGET_NAME}Targets
-  FILE "${CMAKE_BINARY_DIR}/${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake"
+install(EXPORT ${TARGET_NAME}Targets
+  FILE "${CMAKE_CONFIG_FILE_BASE_NAME}Targets.cmake"
   NAMESPACE ${PROJECT_NAMESPACE}::
+  DESTINATION ${CMAKE_INSTALL_DIR}
 )
 
 # Now install the 3 config files
@@ -56,27 +57,3 @@ install(EXPORT ${TARGET_NAME}Targets
   NAMESPACE ${PROJECT_NAMESPACE}::
   DESTINATION ${CMAKE_INSTALL_DIR}
 )
-
-# Create and install a global module include file
-# This makes it possible to include all header files of the module by using
-# #include <${PROJECT_NAME}>
-set(GLOBAL_HEADER_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME_PREFIX}${SO_VERSION}${PROJECT_BASE_NAME})
-file(WRITE ${GLOBAL_HEADER_FILE} "//Includes all headers of ${PROJECT_NAME}\n\n")
-
-foreach(header ${${TARGET_NAME}_PUBLIC_HEADERS})
-  get_filename_component(header_filename ${header} NAME)
-  file(APPEND ${GLOBAL_HEADER_FILE} "#include \"${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}/${header_filename}\"\n")
-endforeach()
-
-install(FILES ${GLOBAL_HEADER_FILE} DESTINATION ${GLOBAL_INCLUDE_INSTALL_DIR})
-
-# Create and install a global module include file for internal use
-# This makes it possible to include all header files of the module by using
-# #include <${PROJECT_NAME}>
-set(GLOBAL_HEADER_FILE ${CMAKE_BINARY_DIR}/local-exports/include/${PROJECT_NAME})
-file(WRITE ${GLOBAL_HEADER_FILE} "//Includes all headers of ${PROJECT_NAME}\n\n")
-
-foreach(header ${${TARGET_NAME}_PUBLIC_HEADERS})
-  get_filename_component(header_filename ${header} NAME)
-  file(APPEND ${GLOBAL_HEADER_FILE} "#include \"${header_filename}\"\n")
-endforeach()
