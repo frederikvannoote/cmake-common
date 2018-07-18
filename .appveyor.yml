@@ -48,19 +48,19 @@ test_script:
   - cmake --build . --config %configuration% --target sdk
 
   # Relocate library
-  - xcopy /E %TEMP%\installed %TEMP%\relocated\
+  - xcopy /E %TEMP%\installed C:\relocated\
  
   # Build and install Simpleapp
   - mkdir %TEMP%\simpleapp-build
   - cd %TEMP%\simpleapp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=%TEMP%/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/simpleapp
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/simpleapp
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
 
   # Build and install QSimpleApp
   - mkdir %TEMP%\QSimpleApp-build
   - cd %TEMP%\QSimpleApp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=%TEMP%/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/QSimpleApp/
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/QSimpleApp/
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
 
