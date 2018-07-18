@@ -48,7 +48,7 @@ test_script:
   - cmake --build . --config %configuration% --target sdk
 
   # Relocate library
-  - copy %TEMP%\installed %TEMP%\relocated
+  - xcopy /E %TEMP%\installed %TEMP%\relocated
  
   # Build and install Simpleapp
   - mkdir %TEMP%\simpleapp-build
