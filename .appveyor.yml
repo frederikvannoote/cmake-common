@@ -34,40 +34,40 @@ install:
 
 build_script:
 # Clone examples: they are the code to test against.
-  - git clone https://github.com/frederikvannoote/cmake-common-examples.git %HOMEPATH%/examples
+  - git clone https://github.com/frederikvannoote/cmake-common-examples.git %APPVEYOR_BUILD_FOLDER%/examples
   - set CMAKE_COMMON=%APPVEYOR_BUILD_FOLDER%
-  - mkdir %TEMP%\installed
+  - mkdir C:\installed
 
 test_script:
   # Build and install simplelib
   - mkdir %TEMP%\simplelib-build
   - cd %TEMP%\simplelib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -G Ninja %HOMEPATH%/examples/simplelib
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/simplelib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
 
   # Relocate library
-  - xcopy /E %TEMP%\installed C:\relocated\
+  - xcopy /E C:\installed C:\relocated\
  
   # Build and install Simpleapp
   - mkdir %TEMP%\simpleapp-build
   - cd %TEMP%\simpleapp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/simpleapp
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/simpleapp
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
 
   # Build and install QSimpleApp
   - mkdir %TEMP%\QSimpleApp-build
   - cd %TEMP%\QSimpleApp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %HOMEPATH%/examples/QSimpleApp/
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/QSimpleApp/
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
 
   # Build and install complex lib
   - mkdir %TEMP%\complexlib-build
   - cd %TEMP%\complexlib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=%TEMP%/installed -G Ninja %HOMEPATH%/examples/complexlib
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/complexlib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
