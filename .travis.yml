@@ -59,7 +59,7 @@ before_install:
 
 install:
 # Clone examples: they are the code to test against.
-  - git clone git@github.com:frederikvannoote/cmake-common-examples.git ${HOME}/examples
+  - git clone https://github.com/frederikvannoote/cmake-common-examples.git ${HOME}/examples
   - export CMAKE_COMMON=${TRAVIS_BUILD_DIR}
   - mkdir /tmp/installed
 
