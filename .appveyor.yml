@@ -35,7 +35,7 @@ install:
 build_script:
 # Clone examples: they are the code to test against.
   - git clone https://github.com/frederikvannoote/cmake-common-examples.git examples
-  - set CMAKE_COMMON=%APPVEYOR_BUILD_FOLDER%
+  - set CMAKE_COMMON=C:/projects/cmake-common
   - mkdir installed
 
 test_script:
