@@ -34,43 +34,47 @@ install:
 
 build_script:
 # Clone examples: they are the code to test against.
-  - git clone https://github.com/frederikvannoote/cmake-common-examples.git %APPVEYOR_BUILD_FOLDER%/examples
+  - git clone https://github.com/frederikvannoote/cmake-common-examples.git examples
   - set CMAKE_COMMON=%APPVEYOR_BUILD_FOLDER%
-  - mkdir C:\installed
+  - mkdir installed
 
 test_script:
   # Build and install simplelib
-  - mkdir %TEMP%\simplelib-build
-  - cd %TEMP%\simplelib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/simplelib
+  - mkdir simplelib-build
+  - cd simplelib-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../examples/simplelib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
+  - cd ..
 
   # Relocate library
-  - xcopy /E C:\installed C:\relocated\
+  - xcopy /E installed relocated\
  
   # Build and install Simpleapp
-  - mkdir %TEMP%\simpleapp-build
-  - cd %TEMP%\simpleapp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/simpleapp
+  - mkdir simpleapp-build
+  - cd simpleapp-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -DCC1simplelib_DIR=../relocated/lib/cmake/CC1simplelib -G Ninja ../examples/simpleapp
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
+  - cd ..
 
   # Build and install QSimpleApp
-  - mkdir %TEMP%\QSimpleApp-build
-  - cd %TEMP%\QSimpleApp-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -DCC1simplelib_DIR=C:/relocated/lib/cmake/CC1simplelib -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/QSimpleApp/
+  - mkdir QSimpleApp-build
+  - cd QSimpleApp-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -DCC1simplelib_DIR=../relocated/lib/cmake/CC1simplelib -G Ninja ../examples/QSimpleApp/
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
+  - cd ..
 
   # Build and install complex lib
-  - mkdir %TEMP%\complexlib-build
-  - cd %TEMP%\complexlib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=C:/installed -G Ninja %APPVEYOR_BUILD_FOLDER%/examples/complexlib
+  - mkdir complexlib-build
+  - cd complexlib-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../examples/complexlib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
+  - cd ..
 
 # uncomment following lines to be able to debug the appveyor image through RDP protocol when build finished
 # https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
