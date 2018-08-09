@@ -1,0 +1,83 @@
+image: Visual Studio 2017
+
+platform: 
+  - x64
+
+configuration: 
+  - Debug
+  - Release
+
+environment:
+  QT_VERSION: 5.9
+  QT_COMPILED: msvc2017
+  matrix:
+  - SHARED: ON
+  - SHARED: OFF
+
+install:
+  ############################################################################
+  # Install Ninja
+  ############################################################################
+  - set NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.6.0/ninja-win.zip"
+  - appveyor DownloadFile %NINJA_URL% -FileName ninja.zip
+  - 7z x ninja.zip -oC:\projects\deps\ninja > nul
+  - set PATH=C:\projects\deps\ninja;%PATH%
+  - ninja --version
+
+  ############################################################################
+  # set correct QTDIR in the PATH environment variable
+  ############################################################################
+  - set VS_FULL=%VS_VERSION% Win64
+  - set QTDIR=C:/Qt/%QT_VERSION%/%QT_COMPILED%_64
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
+  - set PATH=%PATH%;%QTDIR%/bin
+
+build_script:
+# Clone examples: they are the code to test against.
+  - git clone https://github.com/frederikvannoote/cmake-common-examples.git examples
+  - set CMAKE_COMMON=C:/projects/cmake-common
+  - mkdir installed
+
+test_script:
+  # Build and install simplelib
+  - mkdir simplelib-build
+  - cd simplelib-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../examples/simplelib
+  - cmake --build . --config %configuration% --target all
+  - cmake --build . --config %configuration% --target install
+  - cmake --build . --config %configuration% --target sdk
+  - cd ..
+
+  # Relocate library
+  - xcopy /E installed relocated\
+ 
+  # Build and install Simpleapp
+  - mkdir simpleapp-build
+  - cd simpleapp-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -DCC1simplelib_DIR=../relocated/lib/cmake/CC1simplelib -G Ninja ../examples/simpleapp
+  - cmake --build . --config %configuration% --target all
+  - cmake --build . --config %configuration% --target install
+  - cd ..
+
+  # Build and install QSimpleApp
+  - mkdir QSimpleApp-build
+  - cd QSimpleApp-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -DCC1simplelib_DIR=../relocated/lib/cmake/CC1simplelib -G Ninja ../examples/QSimpleApp/
+  - cmake --build . --config %configuration% --target all
+  - cmake --build . --config %configuration% --target install
+  - cd ..
+
+  # Build and install complex lib
+  - mkdir complexlib-build
+  - cd complexlib-build
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../examples/complexlib
+  - cmake --build . --config %configuration% --target all
+  - cmake --build . --config %configuration% --target install
+  - cmake --build . --config %configuration% --target sdk
+  - cd ..
+
+# uncomment following lines to be able to debug the appveyor image through RDP protocol when build finished
+# https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
+# on_finish:
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+

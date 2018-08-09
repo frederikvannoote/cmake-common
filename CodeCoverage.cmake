@@ -69,7 +69,8 @@ if(CODE_COVERAGE)
         COMMAND ${LCOV_EXECUTABLE} --quiet --capture --directory . --base-directory ${CMAKE_SOURCE_DIR} --no-external -o coverage.info
         COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info ${CODE_COVERAGE_EXCLUDES} -o coverage.info
         COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*test_\* -o coverage.info
-        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info catch.hpp -o coverage.info
+        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*catch.hpp\* -o coverage.info
+        COMMAND ${LCOV_EXECUTABLE} --quiet --remove coverage.info \*contract.cpp\* -o coverage.info
         COMMAND ${LCOV_EXECUTABLE} --list coverage.info
         COMMAND ${LCOV_EXECUTABLE} --summary coverage.info
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
