@@ -125,3 +125,4 @@ include(Doxygen)
 # Generate information (name, description, version, etc.) for applications and libraries
 include(GetGitRevisionDescription)
 include(AddResourceInfo)
+include(manifest/AddManifest)
