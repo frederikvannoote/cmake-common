@@ -1,3 +1,5 @@
+# Add manifest: executables may require administrative privileges.
+
 macro(add_manifest PROJECT TYPE)
 if(CMAKE_BUILD_TYPE MATCHES Release)
     if(WIN32 AND NOT UNIX)
