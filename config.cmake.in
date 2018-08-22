@@ -12,12 +12,6 @@
 set(@PROJECT_NAME@_INSTALL_DIR @PACKAGE_INCLUDE_INSTALL_DIR@)
 set(@PROJECT_NAME@_GLOBAL_INSTALL_DIR @PACKAGE_GLOBAL_INCLUDE_INSTALL_DIR@)
 
-# find_package will silently look for the dependencies and set the correct
-# include directories and link libraries
-foreach(PACKAGE @DEPENDENT_PACKAGES@)
-    find_package(${PACKAGE} QUIET)
-endforeach()
-
 foreach(PACKAGE @DEPENDENT_PACKAGES@)
     check_required_components(${PACKAGE})
 endforeach()
